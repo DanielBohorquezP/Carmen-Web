@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 
 const credentialIcons = [Stethoscope, Microscope, Brain];
 
-interface HeroSectionProps extends React.HTMLAttributes<HTMLDivElement> {
+interface HeroSectionProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'title'> {
   logo?: {
     url: string;
     alt: string;
