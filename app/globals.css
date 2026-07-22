@@ -1,34 +1,57 @@
 @import "tailwindcss";
 
 @theme {
-  --color-pink: #ffa5c4;
-  --color-yellow: #ffe88b;
-  --color-turquoise: #8be3e7;
-  --color-lilac: #cbb5ff;
-  --color-pastel-yellow: #ffea93;
-  --color-coral: #ffa69a;
-  --color-cream: #fff8f0;
-  --color-dark: #2d2d2d;
+  --color-lavender: #d8c4ff;
+  --color-pink: #f5c9e7;
+  --color-cream: #fff9f2;
+  --color-ink: #1d1d1d;
+  --color-white: #ffffff;
+
+  --spacing-section: 8rem;
+  --spacing-section-sm: 5rem;
+
+  --font-heading: var(--font-heading), serif;
+  --font-body: var(--font-body), sans-serif;
+  --font-button: var(--font-button), sans-serif;
 }
 
-html {
-  scroll-behavior: smooth;
+@keyframes editorial-marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
 }
 
-body {
-  background: #fff8f0;
-  color: #2d2d2d;
-  font-family: var(--font-zodiak), var(--font-poppins), system-ui, sans-serif;
+.editorial-marquee-track {
+  animation: editorial-marquee var(--marquee-duration, 60s) linear infinite;
 }
 
-.font-display {
-  font-family: var(--font-magic-retro), "Brush Script MT", cursive;
+.editorial-marquee-track[data-paused="true"] {
+  animation-play-state: paused;
 }
 
-.font-hero-title {
-  font-family: var(--font-mount-hills), var(--font-magic-retro), cursive;
+@media (prefers-reduced-motion: reduce) {
+  .editorial-marquee-track {
+    animation-play-state: paused;
+  }
 }
 
-.font-sticker {
-  font-family: "BadaBoom BB", var(--font-magic-retro), sans-serif;
+@layer base {
+  body {
+    background-color: var(--color-cream);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    font-size: 1.0625rem;
+    font-weight: 450;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-heading);
+    font-weight: 400;
+  }
 }

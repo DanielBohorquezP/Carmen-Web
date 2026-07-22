@@ -1,34 +1,30 @@
 import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
 import localFont from "next/font/local";
-import "./globals.css";
 import { SiteHeader } from "@/components/SiteHeader";
+import { SiteFooter } from "@/components/SiteFooter";
+import "./globals.css";
 
-const magicRetro = localFont({
-  src: "../fonts/MagicRetro.ttf",
-  variable: "--font-magic-retro",
+const superMellow = localFont({
+  src: "../fonts/Super Mellow/Super Mellow.ttf",
+  variable: "--font-heading",
+  display: "swap",
 });
 
-const mountHills = localFont({
-  src: "../fonts/MountHills.otf",
-  variable: "--font-mount-hills",
+const jost = localFont({
+  src: "../fonts/Jost/Jost-VariableFont_wght.ttf",
+  variable: "--font-body",
+  display: "swap",
 });
 
-const zodiak = localFont({
-  src: "../fonts/Zodiak-BlackItalic.ttf",
-  variable: "--font-zodiak",
-});
-
-const poppins = Poppins({
-  weight: ["400", "500", "600", "700"],
-  subsets: ["latin"],
-  variable: "--font-poppins",
+const spaceGrotesk = localFont({
+  src: "../fonts/Space_Grotesk/SpaceGrotesk-VariableFont_wght.ttf",
+  variable: "--font-button",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
   title: "Well Brain — Carmen Susana",
-  description:
-    "Neurociencia aplicada a tu bienestar, con respaldo médico real. Well Brain traduce la ciencia del cerebro en hábitos que sí se sostienen.",
+  description: "Neurociencia aplicada al bienestar.",
 };
 
 export default function RootLayout({
@@ -37,12 +33,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es">
-      <body
-        className={`${magicRetro.variable} ${mountHills.variable} ${zodiak.variable} ${poppins.variable} antialiased`}
-      >
+    <html
+      lang="es"
+      className={`${superMellow.variable} ${jost.variable} ${spaceGrotesk.variable}`}
+    >
+      <body>
         <SiteHeader />
         {children}
+        <SiteFooter />
       </body>
     </html>
   );
