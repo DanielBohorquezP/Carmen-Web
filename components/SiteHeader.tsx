@@ -37,7 +37,7 @@ export function SiteHeader() {
         <nav className="hidden items-center gap-7 lg:flex">
           {NAV_ITEMS.map((item) =>
             item.comingSoon ? (
-              <span key={item.href} className="group relative cursor-default">
+              <span key={item.href} className="group relative cursor-pointer">
                 <span className="font-button text-xs uppercase tracking-wider text-ink/40">
                   {item.label}
                 </span>
@@ -103,7 +103,7 @@ export function SiteHeader() {
             {NAV_ITEMS.map((item) => (
               <li key={item.href}>
                 {item.comingSoon ? (
-                  <span className="flex items-center gap-3 py-2">
+                  <span className="flex items-center gap-3 py-2 cursor-pointer">
                     <span className="font-button text-sm uppercase tracking-wider text-ink/35">
                       {item.label}
                     </span>

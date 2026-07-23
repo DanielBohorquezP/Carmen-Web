@@ -1,70 +1,104 @@
 "use client";
 
-import Image from "next/image";
-import { motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { CartoonButton } from "@/components/ui/cartoon-button";
-import { IconArrowButton } from "@/components/ui/icon-arrow-button";
+import { FolderIcon } from "@/components/ui/folder-icon";
+import { RetroWindowBar } from "@/components/ui/retro-window-bar";
 import { StickerBadge } from "@/components/ui/sticker-badge";
-
-interface Step {
-  name: string;
-  icon: string;
-  photo: string;
-  description: string;
-}
-
-const STEPS: Step[] = [
-  {
-    name: "Brain Foundations",
-    icon: "/icons/pillars/cerebro.png",
-    photo: "/photos/pillars/journey-brain-foundations.png",
-    description:
-      "Entiende cómo funciona tu cerebro y por qué tus hábitos actuales son automáticos.",
-  },
-  {
-    name: "Nutrition",
-    icon: "/icons/pillars/manzana.png",
-    photo: "/photos/pillars/journey-nutrition.png",
-    description:
-      "Alimenta tu mente para sostener energía, enfoque y claridad cada día.",
-  },
-  {
-    name: "Movement",
-    icon: "/icons/pillars/mancuernas.png",
-    photo: "/photos/pillars/journey-movement.png",
-    description:
-      "Descubre cómo el movimiento cambia la estructura y química de tu cerebro.",
-  },
-  {
-    name: "Sleep",
-    icon: "/icons/pillars/luna.png",
-    photo: "/photos/pillars/journey-sleep.png",
-    description:
-      "Recupera un descanso profundo que sostiene cada hábito que construyes.",
-  },
-  {
-    name: "Focus",
-    icon: "/icons/pillars/arco.png",
-    photo: "/photos/pillars/journey-focus.png",
-    description:
-      "Entrena tu atención en un mundo diseñado para distraerte a cada instante.",
-  },
-  {
-    name: "Identity",
-    icon: "/icons/pillars/corazon.png",
-    photo: "/photos/pillars/journey-identity.png",
-    description:
-      "Conviértete, un pequeño hábito a la vez, en la persona que quieres ser.",
-  },
-];
-
-const ACCENTS = {
-  lavender: { hex: "#9B6FEA", bg: "bg-lavender" },
-  pink: { hex: "#C96FA0", bg: "bg-pink" },
-} as const;
+import { PILLARS } from "@/lib/pillars";
 
 export function MethodJourney() {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [originRect, setOriginRect] = useState<DOMRect | null>(null);
+  const triggerRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const lastOpenedIndex = useRef<number | null>(null);
+  const cardRef = useRef<HTMLDivElement | null>(null);
+  const shouldReduceMotion = useReducedMotion();
+
+  function openPillar(index: number, rect: DOMRect) {
+    lastOpenedIndex.current = index;
+    setOriginRect(rect);
+    setOpenIndex(index);
+  }
+
+  function close() {
+    setOpenIndex(null);
+  }
+
+  // Escape to close + basic focus trap while the card is open.
+  useEffect(() => {
+    if (openIndex === null) return;
+
+    function onKeyDown(e: KeyboardEvent) {
+      if (e.key === "Escape") {
+        close();
+        return;
+      }
+      if (e.key === "Tab" && cardRef.current) {
+        const focusables = cardRef.current.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+        );
+        if (focusables.length === 0) return;
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    }
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [openIndex]);
+
+  // Lock body scroll while the card is open.
+  useEffect(() => {
+    if (openIndex === null) return;
+    const original = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = original;
+    };
+  }, [openIndex]);
+
+  // Move focus into the card on open, back to the trigger folder on close.
+  useEffect(() => {
+    if (openIndex !== null) {
+      cardRef.current?.focus();
+    } else if (lastOpenedIndex.current !== null) {
+      triggerRefs.current[lastOpenedIndex.current]?.focus();
+    }
+  }, [openIndex]);
+
+  const pillar = openIndex !== null ? PILLARS[openIndex] : null;
+
+  const originStyle =
+    originRect && !shouldReduceMotion
+      ? {
+          transformOrigin: `${((originRect.left + originRect.width / 2) / window.innerWidth) * 100}% ${((originRect.top + originRect.height / 2) / window.innerHeight) * 100}%`,
+        }
+      : undefined;
+
+  const cardMotionProps = shouldReduceMotion
+    ? {
+        initial: { opacity: 0 },
+        animate: { opacity: 1 },
+        exit: { opacity: 0 },
+        transition: { duration: 0.15 },
+      }
+    : {
+        initial: { opacity: 0, scale: 0.05 },
+        animate: { opacity: 1, scale: 1 },
+        exit: { opacity: 0, scale: 0.05 },
+        transition: { duration: 0.45, ease: [0.16, 1, 0.3, 1] as const },
+      };
+
   return (
     <section className="relative overflow-hidden bg-lavender px-6 py-section-sm sm:px-10 lg:px-24 lg:py-section">
       <StickerBadge
@@ -80,7 +114,7 @@ export function MethodJourney() {
         transition={{ duration: 0.7, ease: "easeOut" }}
         className="relative mx-auto flex max-w-2xl flex-col items-center text-center"
       >
-        <h2 className="font-heading text-4xl leading-tight text-ink/85 sm:text-5xl lg:text-[52px]">
+        <h2 className="font-heading text-4xl leading-tight text-ink/85 uppercase sm:text-5xl lg:text-[52px]">
           6 áreas para reprogramar tu mente
         </h2>
         <p className="mt-4 font-body text-lg text-ink/55">
@@ -89,17 +123,33 @@ export function MethodJourney() {
         <SparkleIcon className="mt-4 h-2.5 w-2.5 text-lavender" />
       </motion.div>
 
-      <div className="relative mx-auto mt-16 max-w-7xl lg:mt-20">
-        <div className="relative grid grid-cols-1 gap-[18px] sm:grid-cols-3 lg:grid-cols-6">
-          {STEPS.map((step, index) => (
-            <ModuleCard
-              key={step.name}
-              step={step}
-              tone={index % 2 === 0 ? "lavender" : "pink"}
-              index={index}
-            />
-          ))}
-        </div>
+      <div className="relative mx-auto mt-14 flex max-w-4xl flex-wrap items-start justify-center gap-x-8 gap-y-10 sm:gap-x-10 lg:mt-16 lg:max-w-none lg:flex-nowrap lg:justify-center lg:gap-x-6">
+        {PILLARS.map((pillarItem, index) => (
+          <motion.button
+            key={pillarItem.name}
+            type="button"
+            ref={(el) => {
+              triggerRefs.current[index] = el;
+            }}
+            onClick={(e) => openPillar(index, e.currentTarget.getBoundingClientRect())}
+            aria-haspopup="dialog"
+            aria-expanded={openIndex === index}
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.5, ease: "easeOut", delay: index * 0.08 }}
+            whileHover={shouldReduceMotion ? undefined : { y: -4, scale: 1.05 }}
+            className="group flex flex-col items-center gap-3 rounded-md [touch-action:manipulation] focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2 focus-visible:outline-none"
+          >
+            <FolderIcon className="h-24 w-28 sm:h-28 sm:w-32 lg:h-28 lg:w-32" />
+            <span className="font-button text-xs uppercase tracking-wider text-ink/70 sm:text-sm">
+              {pillarItem.name}
+            </span>
+            <span className="rounded border border-ink/20 px-1.5 py-0.5 font-button text-[9px] tracking-[0.15em] text-ink/40 uppercase lg:hidden">
+              Ver más
+            </span>
+          </motion.button>
+        ))}
       </div>
 
       <motion.div
@@ -116,81 +166,60 @@ export function MethodJourney() {
           icon={<ArrowRight className="h-4 w-4" />}
         />
       </motion.div>
+
+      <AnimatePresence>
+        {pillar && (
+          <>
+            <motion.div
+              key="backdrop"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: shouldReduceMotion ? 0.1 : 0.25 }}
+              className="fixed inset-0 z-[60] bg-ink/50"
+              onClick={close}
+              aria-hidden="true"
+            />
+            <motion.div
+              key="card"
+              ref={cardRef}
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="pillar-card-title"
+              tabIndex={-1}
+              style={originStyle}
+              {...cardMotionProps}
+              className="fixed inset-4 z-[70] overflow-y-auto overscroll-contain border-2 border-ink bg-cream shadow-[0_20px_60px_-15px_rgba(29,29,29,0.4)] focus:outline-none sm:inset-10 lg:inset-16"
+            >
+              <RetroWindowBar label={pillar.name} onClose={close} className="bg-lavender/40" />
+
+              <div className="px-6 pt-16 pb-10 sm:px-12 sm:pt-20 sm:pb-14 lg:px-20 lg:pt-24">
+                <span className="block font-heading text-6xl leading-none text-[#9B6FEA] sm:text-8xl">
+                  {String((openIndex ?? 0) + 1).padStart(2, "0")}
+                </span>
+
+                <h3
+                  id="pillar-card-title"
+                  className="mt-6 font-button text-2xl tracking-[0.12em] text-ink uppercase sm:text-3xl"
+                >
+                  {pillar.name}
+                </h3>
+
+                <span className="mt-6 block h-px w-24 bg-ink/15" />
+
+                <p className="mt-6 max-w-xl font-body text-lg leading-relaxed text-ink/70 sm:text-xl">
+                  {pillar.description}
+                </p>
+
+                <span className="mt-10 block font-body text-sm tracking-wide text-ink/45">
+                  {pillar.month}
+                </span>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </section>
-  );
-}
-
-function ModuleCard({
-  step,
-  tone,
-  index,
-}: {
-  step: Step;
-  tone: keyof typeof ACCENTS;
-  index: number;
-}) {
-  const accent = ACCENTS[tone];
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.3 }}
-      transition={{ duration: 0.55, ease: "easeOut", delay: (index % 6) * 0.08 }}
-      className="relative isolate flex h-full min-h-[440px] flex-col overflow-hidden bg-white shadow-[0_4px_20px_rgba(0,0,0,0.03)] transition-shadow duration-300 hover:shadow-[0_8px_30px_-4px_rgba(0,0,0,0.08)]"
-    >
-      {/* Photo */}
-      <div className="relative h-[255px] shrink-0 bg-black/[0.03]">
-        <Image
-          src={step.photo}
-          alt={step.name}
-          fill
-          sizes="(min-width: 1024px) 16vw, (min-width: 640px) 33vw, 100vw"
-          className="object-cover"
-        />
-        <span className="absolute top-3 left-1/2 z-10 flex h-[30px] w-[30px] -translate-x-1/2 items-center justify-center rounded-full bg-white/70 font-button text-xs font-semibold text-ink/70">
-          {String(index + 1).padStart(2, "0")}
-        </span>
-      </div>
-
-      {/* Overlapping medallion */}
-      <div className="absolute top-[224px] left-1/2 z-20 flex h-[62px] w-[62px] -translate-x-1/2 items-center justify-center rounded-full bg-white shadow-[0_10px_30px_rgba(0,0,0,0.08)]">
-        <Image
-          src={step.icon}
-          alt=""
-          width={24}
-          height={24}
-          className="object-contain"
-        />
-      </div>
-
-      {/* Content */}
-      <div className="flex flex-1 flex-col items-center px-6 pt-[45px] pb-6 text-center">
-        <h3 className="font-poppins text-[30px] leading-tight font-bold text-ink">
-          {step.name}
-        </h3>
-        <span
-          className="mt-3 h-[2px] w-[18px]"
-          style={{ backgroundColor: accent.hex }}
-        />
-        <p className="mt-3 font-body text-[15px] leading-[1.6] text-ink/55 line-clamp-3">
-          {step.description}
-        </p>
-        <div className="mt-auto flex justify-center pt-4">
-          <IconArrowButton
-            href="/method"
-            label={`Descubre ${step.name}`}
-            tone={accent.hex}
-          />
-        </div>
-      </div>
-
-      {/* Bottom-left organic notch */}
-      <span
-        aria-hidden
-        className="pointer-events-none absolute bottom-0 left-0 z-30 h-11 w-11 -translate-x-1/2 translate-y-1/2 rotate-45 rounded-lg bg-cream"
-      />
-    </motion.div>
   );
 }
 

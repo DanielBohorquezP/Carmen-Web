@@ -23,14 +23,14 @@ export function WindowStack({ className, variant = "diagonal" }: WindowStackProp
         <div
           aria-hidden="true"
           className={cn(
-            "absolute inset-0 z-0 translate-x-8 translate-y-8 border-2 border-ink bg-[#9B6FEA]",
+            "absolute inset-0 z-0 translate-x-8 translate-y-8 border-2 border-ink bg-cream",
             className,
           )}
         />
         <div
           aria-hidden="true"
           className={cn(
-            "absolute inset-0 z-[1] translate-x-4 translate-y-4 border-2 border-ink bg-[#F6DE8C]",
+            "absolute inset-0 z-[1] translate-x-4 translate-y-4 border-2 border-ink bg-cream",
             className,
           )}
         />

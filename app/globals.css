@@ -56,6 +56,26 @@
     font-family: var(--font-heading);
     font-weight: 400;
   }
+
+  html {
+    cursor: url("/cursors/pixel-arrow-v4.png") 1 1, auto;
+  }
+
+  input,
+  textarea {
+    cursor: text;
+  }
+}
+
+@layer utilities {
+  a,
+  button,
+  label[for],
+  select,
+  [role="button"],
+  .cursor-pointer {
+    cursor: url("/cursors/pixel-hand-v3.png") 8 1, pointer;
+  }
 }
 
 @layer utilities {

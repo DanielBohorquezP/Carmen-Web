@@ -17,7 +17,7 @@ export function MethodPhilosophy() {
           className="relative mx-auto w-full max-w-md lg:mx-0"
         >
           <StickerBadge
-            src="/brand/sticker-cd.png"
+            src="/brand/sticker-cd-v2.png"
             className="absolute -top-10 -left-10 z-20 h-24 w-24 sm:-top-12 sm:-left-12 sm:h-32 sm:w-32"
             rotate={-12}
           />
