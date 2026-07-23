@@ -1,17 +1,20 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { Cormorant_Garamond } from "next/font/google";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import "./globals.css";
 
-const superMellow = localFont({
-  src: "../fonts/Super Mellow/Super Mellow.ttf",
+const cormorantGaramond = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  style: ["normal", "italic"],
   variable: "--font-heading",
   display: "swap",
 });
 
-const jost = localFont({
-  src: "../fonts/Jost/Jost-VariableFont_wght.ttf",
+const spaceGroteskBody = localFont({
+  src: "../fonts/Space_Grotesk/SpaceGrotesk-VariableFont_wght.ttf",
   variable: "--font-body",
   display: "swap",
 });
@@ -19,6 +22,18 @@ const jost = localFont({
 const spaceGrotesk = localFont({
   src: "../fonts/Space_Grotesk/SpaceGrotesk-VariableFont_wght.ttf",
   variable: "--font-button",
+  display: "swap",
+});
+
+const spaceGroteskPoppins = localFont({
+  src: "../fonts/Space_Grotesk/SpaceGrotesk-VariableFont_wght.ttf",
+  variable: "--font-poppins",
+  display: "swap",
+});
+
+const superMellowDisplay = localFont({
+  src: "../fonts/Super Mellow/Super Mellow.ttf",
+  variable: "--font-display",
   display: "swap",
 });
 
@@ -35,7 +50,7 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={`${superMellow.variable} ${jost.variable} ${spaceGrotesk.variable}`}
+      className={`${cormorantGaramond.variable} ${spaceGroteskBody.variable} ${spaceGrotesk.variable} ${spaceGroteskPoppins.variable} ${superMellowDisplay.variable}`}
     >
       <body>
         <SiteHeader />

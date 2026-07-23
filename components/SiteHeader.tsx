@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { retroButtonVariants, retroButtonInnerVariants } from "@/components/ui/retro-button";
 
@@ -18,25 +18,10 @@ const NAV_ITEMS = [
 ];
 
 export function SiteHeader() {
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 40);
-    handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
   return (
-    <header
-      className={cn(
-        "fixed inset-x-0 top-0 z-50 transition-colors duration-500",
-        isScrolled
-          ? "bg-cream/95 shadow-[0_1px_0_0_rgba(29,29,29,0.08)] backdrop-blur-sm"
-          : "bg-transparent",
-      )}
-    >
+    <header className="fixed inset-x-0 top-0 z-50 bg-cream shadow-[0_1px_0_0_rgba(29,29,29,0.08)]">
       <div className="flex w-full items-center justify-between px-10 py-5 lg:px-24">
         <Link href="/" className="relative z-10 block h-9 w-auto shrink-0 lg:h-20">
           <Image
@@ -53,12 +38,7 @@ export function SiteHeader() {
           {NAV_ITEMS.map((item) =>
             item.comingSoon ? (
               <span key={item.href} className="group relative cursor-default">
-                <span
-                  className={cn(
-                    "font-button text-xs uppercase tracking-wider transition-colors duration-300",
-                    isScrolled ? "text-ink/40" : "text-white/50 drop-shadow-sm",
-                  )}
-                >
+                <span className="font-button text-xs uppercase tracking-wider text-ink/40">
                   {item.label}
                 </span>
                 <span className="pointer-events-none absolute -top-9 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-md bg-ink px-2.5 py-1.5 font-button text-[10px] tracking-[0.15em] text-white uppercase opacity-0 transition-opacity duration-200 group-hover:opacity-100">
@@ -70,12 +50,7 @@ export function SiteHeader() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={cn(
-                  "font-button text-xs uppercase tracking-wider transition-colors duration-300",
-                  isScrolled
-                    ? "text-ink/80 hover:text-ink"
-                    : "text-white/90 drop-shadow-sm hover:text-white",
-                )}
+                className="font-button text-xs uppercase tracking-wider text-ink/80 transition-colors duration-300 hover:text-ink"
               >
                 {item.label}
               </Link>
@@ -99,10 +74,7 @@ export function SiteHeader() {
           aria-controls="mobile-nav"
           aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"}
           onClick={() => setIsMenuOpen((open) => !open)}
-          className={cn(
-            "relative z-10 flex h-9 w-9 flex-col items-center justify-center gap-1.5 lg:hidden",
-            isScrolled ? "text-ink" : "text-white",
-          )}
+          className="relative z-10 flex h-9 w-9 flex-col items-center justify-center gap-1.5 text-ink lg:hidden"
         >
           <span
             className={cn(

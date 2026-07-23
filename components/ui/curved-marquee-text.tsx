@@ -58,10 +58,10 @@ export function CurvedMarqueeText({
         <path id={pathId} d={CURVE_PATHS[curve]} fill="none" />
       </defs>
       <text
-        style={{ fontFamily: "var(--font-heading)" }}
+        style={{ fontFamily: "var(--font-display)" }}
         fontSize={fontSize}
         fontStyle={italic ? "italic" : "normal"}
-        fontWeight="700"
+        fontWeight="400"
         fill={fill}
         opacity="1"
       >

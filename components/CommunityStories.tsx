@@ -32,29 +32,18 @@ export function CommunityStories() {
   };
 
   return (
-    <section className="relative overflow-hidden bg-cream px-6 py-section-sm sm:px-10 lg:px-24 lg:py-section">
+    <section className="relative overflow-hidden bg-pink px-6 py-section-sm sm:px-10 lg:px-24 lg:py-section">
       <Image
-        src="/photos/fondo-testimonios.png"
+        src="/photos/fondoabout.png"
         alt=""
         fill
         sizes="100vw"
         className="object-cover opacity-15"
-        style={{
-          maskImage:
-            "linear-gradient(to bottom, transparent, black 15%, black 85%, transparent)",
-          WebkitMaskImage:
-            "linear-gradient(to bottom, transparent, black 15%, black 85%, transparent)",
-        }}
       />
 
       <FloatingSparkle className="absolute top-12 left-10 h-4 w-4 text-lavender/50" />
       <FloatingSparkle className="absolute right-12 bottom-24 h-5 w-5 text-pink/50" />
       <span className="absolute top-1/2 right-8 h-2 w-2 rounded-full bg-lavender/50" />
-      <StickerBadge
-        src="/brand/sticker-cd.png"
-        className="absolute top-24 right-[4%] z-20 h-24 w-24 sm:top-28 sm:right-[8%] sm:h-32 sm:w-32"
-        rotate={-10}
-      />
       <StickerBadge
         src="/brand/sticker-card.png"
         className="absolute bottom-24 left-[4%] z-20 h-24 w-24 sm:bottom-28 sm:left-[8%] sm:h-32 sm:w-32"
@@ -70,16 +59,16 @@ export function CommunityStories() {
       >
         <StickerBadge
           src="/brand/sticker-stars.png"
-          className="absolute top-1/2 -left-8 z-20 h-24 w-24 -translate-y-1/2 sm:-left-20 sm:h-32 sm:w-32"
+          className="absolute top-1/2 -right-8 z-20 h-24 w-24 -translate-y-1/2 sm:-right-20 sm:h-32 sm:w-32"
           rotate={-12}
         />
         <h2 className="font-heading text-5xl leading-tight text-ink sm:text-6xl lg:text-7xl">
-          Real Stories. <span className="text-[#9B6FEA]">Real Transformation.</span>
+          Build the Brain Behind{" "}
+          <span className="text-[#9B6FEA]">the Life You Want</span>
         </h2>
         <p className="mt-6 font-body text-lg leading-relaxed text-ink/70 sm:text-xl">
-          Los cambios más importantes no se miden solo en estadísticas. Se
-          sienten en la vida diaria de quienes aplican el método — así lo
-          cuentan, en sus propias palabras.
+          Neurociencia, hábitos y bienestar para ayudarte a pensar mejor,
+          sentirte mejor y vivir con más intención.
         </p>
       </motion.div>
 

@@ -4,12 +4,13 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { CartoonButton } from "@/components/ui/cartoon-button";
+import { IconArrowButton } from "@/components/ui/icon-arrow-button";
 import { StickerBadge } from "@/components/ui/sticker-badge";
-import { cn } from "@/lib/utils";
 
 interface Step {
   name: string;
   icon: string;
+  photo: string;
   description: string;
 }
 
@@ -17,44 +18,55 @@ const STEPS: Step[] = [
   {
     name: "Brain Foundations",
     icon: "/icons/pillars/cerebro.png",
+    photo: "/photos/pillars/journey-brain-foundations.png",
     description:
       "Entiende cómo funciona tu cerebro y por qué tus hábitos actuales son automáticos.",
   },
   {
     name: "Nutrition",
     icon: "/icons/pillars/manzana.png",
+    photo: "/photos/pillars/journey-nutrition.png",
     description:
       "Alimenta tu mente para sostener energía, enfoque y claridad cada día.",
   },
   {
     name: "Movement",
     icon: "/icons/pillars/mancuernas.png",
+    photo: "/photos/pillars/journey-movement.png",
     description:
       "Descubre cómo el movimiento cambia la estructura y química de tu cerebro.",
   },
   {
     name: "Sleep",
     icon: "/icons/pillars/luna.png",
+    photo: "/photos/pillars/journey-sleep.png",
     description:
       "Recupera un descanso profundo que sostiene cada hábito que construyes.",
   },
   {
     name: "Focus",
     icon: "/icons/pillars/arco.png",
+    photo: "/photos/pillars/journey-focus.png",
     description:
       "Entrena tu atención en un mundo diseñado para distraerte a cada instante.",
   },
   {
     name: "Identity",
     icon: "/icons/pillars/corazon.png",
+    photo: "/photos/pillars/journey-identity.png",
     description:
       "Conviértete, un pequeño hábito a la vez, en la persona que quieres ser.",
   },
 ];
 
+const ACCENTS = {
+  lavender: { hex: "#9B6FEA", bg: "bg-lavender" },
+  pink: { hex: "#C96FA0", bg: "bg-pink" },
+} as const;
+
 export function MethodJourney() {
   return (
-    <section className="relative overflow-hidden bg-cream px-6 py-section-sm sm:px-10 lg:px-24 lg:py-section">
+    <section className="relative overflow-hidden bg-lavender px-6 py-section-sm sm:px-10 lg:px-24 lg:py-section">
       <StickerBadge
         src="/brand/sticker-rocola.png"
         className="absolute bottom-8 -right-10 z-0 h-56 w-56 sm:bottom-10 sm:-right-14 sm:h-72 sm:w-72"
@@ -66,29 +78,28 @@ export function MethodJourney() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.3 }}
         transition={{ duration: 0.7, ease: "easeOut" }}
-        className="relative mx-auto max-w-2xl text-center"
+        className="relative mx-auto flex max-w-2xl flex-col items-center text-center"
       >
-        <div className="flex items-center justify-center gap-3">
-          <h2 className="font-heading text-5xl leading-tight text-ink sm:text-6xl lg:text-7xl">
-            The WELL BRAIN <span className="text-[#9B6FEA]">Method</span>
-          </h2>
-          <SparkleIcon className="hidden h-6 w-6 shrink-0 text-pink sm:block" />
-        </div>
-        <p className="mt-6 font-body text-lg leading-relaxed text-ink/70 sm:text-xl">
-          Un recorrido progresivo diseñado para transformar tu mente a través
-          de pequeños cambios sostenibles, mes a mes.
+        <h2 className="font-heading text-4xl leading-tight text-ink/85 sm:text-5xl lg:text-[52px]">
+          6 áreas para reprogramar tu mente
+        </h2>
+        <p className="mt-4 font-body text-lg text-ink/55">
+          y construir hábitos que transforman tu vida.
         </p>
+        <SparkleIcon className="mt-4 h-2.5 w-2.5 text-lavender" />
       </motion.div>
 
-      <div className="relative mx-auto mt-16 grid max-w-7xl grid-cols-2 gap-4 sm:grid-cols-3 lg:mt-20 lg:grid-cols-6 lg:gap-5">
-        {STEPS.map((step, index) => (
-          <ModuleCard
-            key={step.name}
-            step={step}
-            tone={index % 2 === 0 ? "lavender" : "pink"}
-            index={index}
-          />
-        ))}
+      <div className="relative mx-auto mt-16 max-w-7xl lg:mt-20">
+        <div className="relative grid grid-cols-1 gap-[18px] sm:grid-cols-3 lg:grid-cols-6">
+          {STEPS.map((step, index) => (
+            <ModuleCard
+              key={step.name}
+              step={step}
+              tone={index % 2 === 0 ? "lavender" : "pink"}
+              index={index}
+            />
+          ))}
+        </div>
       </div>
 
       <motion.div
@@ -115,49 +126,70 @@ function ModuleCard({
   index,
 }: {
   step: Step;
-  tone: "lavender" | "pink";
+  tone: keyof typeof ACCENTS;
   index: number;
 }) {
+  const accent = ACCENTS[tone];
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.3 }}
       transition={{ duration: 0.55, ease: "easeOut", delay: (index % 6) * 0.08 }}
-      className="group flex h-full flex-col overflow-hidden rounded-2xl border border-ink/10 bg-white transition-all duration-500 hover:-translate-y-1.5 hover:border-lavender hover:shadow-[0_20px_45px_-20px_rgba(155,111,234,0.35)]"
+      className="relative isolate flex h-full min-h-[440px] flex-col overflow-hidden bg-white shadow-[0_4px_20px_rgba(0,0,0,0.03)] transition-shadow duration-300 hover:shadow-[0_8px_30px_-4px_rgba(0,0,0,0.08)]"
     >
-      <div className="flex items-center gap-1.5 border-b-2 border-lavender bg-gradient-to-r from-lavender/80 via-pink/60 to-lavender/70 px-3 py-2">
-        <span className="h-2 w-2 rounded-full bg-[#B79AFA]" />
-        <span className="h-2 w-2 rounded-full bg-[#D8C4FF]" />
-        <span className="h-2 w-2 rounded-full bg-[#F5C9E7]" />
+      {/* Photo */}
+      <div className="relative h-[255px] shrink-0 bg-black/[0.03]">
+        <Image
+          src={step.photo}
+          alt={step.name}
+          fill
+          sizes="(min-width: 1024px) 16vw, (min-width: 640px) 33vw, 100vw"
+          className="object-cover"
+        />
+        <span className="absolute top-3 left-1/2 z-10 flex h-[30px] w-[30px] -translate-x-1/2 items-center justify-center rounded-full bg-white/70 font-button text-xs font-semibold text-ink/70">
+          {String(index + 1).padStart(2, "0")}
+        </span>
       </div>
 
-      <div
-        className={cn(
-          "relative aspect-square w-full shrink-0 p-6 transition-transform duration-500 group-hover:scale-105 sm:p-7",
-          tone === "lavender" ? "bg-lavender" : "bg-pink",
-        )}
-      >
+      {/* Overlapping medallion */}
+      <div className="absolute top-[224px] left-1/2 z-20 flex h-[62px] w-[62px] -translate-x-1/2 items-center justify-center rounded-full bg-white shadow-[0_10px_30px_rgba(0,0,0,0.08)]">
         <Image
           src={step.icon}
           alt=""
-          fill
-          sizes="(min-width: 1024px) 15vw, 40vw"
-          className="object-contain p-4"
+          width={24}
+          height={24}
+          className="object-contain"
         />
       </div>
 
-      <div className="flex flex-1 flex-col gap-2 px-4 py-5 text-center sm:py-6">
-        <span className="font-button text-sm tracking-[0.15em] text-[#9B6FEA]">
-          {String(index + 1).padStart(2, "0")}
-        </span>
-        <h3 className="font-button text-sm tracking-[0.06em] text-ink uppercase sm:text-base">
+      {/* Content */}
+      <div className="flex flex-1 flex-col items-center px-6 pt-[45px] pb-6 text-center">
+        <h3 className="font-poppins text-[30px] leading-tight font-bold text-ink">
           {step.name}
         </h3>
-        <p className="font-body text-xs leading-relaxed text-ink/60 sm:text-sm">
+        <span
+          className="mt-3 h-[2px] w-[18px]"
+          style={{ backgroundColor: accent.hex }}
+        />
+        <p className="mt-3 font-body text-[15px] leading-[1.6] text-ink/55 line-clamp-3">
           {step.description}
         </p>
+        <div className="mt-auto flex justify-center pt-4">
+          <IconArrowButton
+            href="/method"
+            label={`Descubre ${step.name}`}
+            tone={accent.hex}
+          />
+        </div>
       </div>
+
+      {/* Bottom-left organic notch */}
+      <span
+        aria-hidden
+        className="pointer-events-none absolute bottom-0 left-0 z-30 h-11 w-11 -translate-x-1/2 translate-y-1/2 rotate-45 rounded-lg bg-cream"
+      />
     </motion.div>
   );
 }

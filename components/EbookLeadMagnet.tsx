@@ -4,25 +4,10 @@ import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { CartoonButton } from "@/components/ui/cartoon-button";
-import { StickerBadge } from "@/components/ui/sticker-badge";
 
 export function EbookLeadMagnet() {
   return (
     <section className="relative overflow-hidden bg-cream px-6 py-section-sm sm:px-10 lg:px-24 lg:py-section">
-      <Image
-        src="/photos/fondo-ebook.png"
-        alt=""
-        fill
-        sizes="100vw"
-        className="object-cover opacity-70"
-        style={{
-          maskImage:
-            "linear-gradient(to bottom, transparent, black 15%, black 85%, transparent)",
-          WebkitMaskImage:
-            "linear-gradient(to bottom, transparent, black 15%, black 85%, transparent)",
-        }}
-      />
-
       <FloatingSparkle className="absolute top-16 left-8 h-4 w-4 text-pink/60 sm:left-16" />
       <FloatingSparkle className="absolute top-1/3 right-10 h-5 w-5 text-lavender/60" />
       <span className="absolute top-24 right-1/3 h-2 w-2 rounded-full bg-pink/50" />
@@ -35,7 +20,7 @@ export function EbookLeadMagnet() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.7, ease: "easeOut" }}
-          className="order-2 lg:order-1"
+          className="order-2 lg:order-2"
         >
           <p className="font-button text-xs tracking-[0.2em] text-[#9B6FEA] uppercase">
             Antes de seguir, un regalo
@@ -101,7 +86,7 @@ export function EbookLeadMagnet() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.7, ease: "easeOut", delay: 0.1 }}
-          className="order-1 flex justify-center lg:order-2"
+          className="relative order-1 flex justify-center lg:order-1"
         >
           <BookMockup />
         </motion.div>
@@ -118,16 +103,11 @@ function BookMockup() {
       transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
     >
       <Image
-        src="/photos/ebook-cover.png"
+        src="/photos/libro.png"
         alt="WELL BRAIN Starter Guide"
         fill
         sizes="(min-width: 640px) 416px, 320px"
         className="object-contain drop-shadow-[0_25px_45px_rgba(29,29,29,0.3)]"
-      />
-      <StickerBadge
-        src="/brand/sticker-cd.png"
-        className="absolute bottom-4 left-2 z-20 h-32 w-32 sm:bottom-6 sm:left-2 sm:h-40 sm:w-40"
-        rotate={-14}
       />
     </motion.div>
   );

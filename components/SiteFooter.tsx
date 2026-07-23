@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 const explora = [
@@ -36,9 +37,13 @@ export function SiteFooter() {
         <div className="flex flex-col gap-16 lg:flex-row lg:items-start lg:justify-between">
           {/* Brand */}
           <div className="shrink-0">
-            <p className="font-heading leading-[0.9] text-ink" style={{ fontSize: "clamp(4rem, 10vw, 8rem)" }}>
-              WELL<br />BRAIN
-            </p>
+            <Image
+              src="/brand/logo-wellbrain.png"
+              alt="Well Brain"
+              width={280}
+              height={140}
+              className="h-auto w-48 object-contain sm:w-56 lg:w-64"
+            />
             <p className="mt-5 font-body text-sm text-ink/45 tracking-widest uppercase">
               Science meets transformation.
             </p>

@@ -35,7 +35,6 @@ export function ContactPage() {
           sizes="100vw"
           className="object-cover object-[70%_20%]"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/25 to-ink/5" />
 
         <SparkleIcon className="absolute top-32 right-[14%] h-5 w-5 text-white/30" />
         <SparkleIcon className="absolute right-[26%] bottom-32 h-3 w-3 text-lavender/50" />
@@ -46,7 +45,7 @@ export function ContactPage() {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="relative z-10 w-full px-6 pb-16 sm:px-10 lg:px-24 lg:pb-24"
         >
-          <h1 className="font-heading text-5xl leading-tight text-white sm:text-6xl lg:text-7xl">
+          <h1 className="font-display text-5xl leading-tight text-white uppercase sm:text-6xl lg:text-7xl">
             Let&apos;s Build
             <br />
             <span className="text-lavender">Your Brain.</span>

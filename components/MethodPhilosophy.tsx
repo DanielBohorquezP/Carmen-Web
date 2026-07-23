@@ -21,9 +21,9 @@ export function MethodPhilosophy() {
             className="absolute -top-10 -left-10 z-20 h-24 w-24 sm:-top-12 sm:-left-12 sm:h-32 sm:w-32"
             rotate={-12}
           />
-          <div className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl border border-lavender/30">
+          <div className="relative aspect-[4/5] w-full border border-lavender/30">
             <Image
-              src="/photos/carmen-intro.jpg"
+              src="/photos/method-moodboard.png"
               alt="Carmen Susana"
               fill
               sizes="(min-width: 1024px) 480px, 90vw"
@@ -39,11 +39,6 @@ export function MethodPhilosophy() {
           transition={{ duration: 0.7, ease: "easeOut", delay: 0.1 }}
           className="relative space-y-6"
         >
-          <StickerBadge
-            src="/brand/sticker-dice.png"
-            className="absolute -top-8 -right-4 z-20 h-16 w-16 sm:-top-10 sm:-right-8 sm:h-20 sm:w-20"
-            rotate={12}
-          />
           <p className="font-heading text-3xl leading-snug text-ink sm:text-4xl">
             Empecé a estudiar el cerebro por curiosidad científica. Terminé
             entendiendo por qué tantas personas fracasan al intentar cambiar.

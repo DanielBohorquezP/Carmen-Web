@@ -11,17 +11,11 @@ interface StickerBadgeProps {
   className?: string;
   rotate?: number;
   delay?: number;
-  /** Desvanece los bordes hacia el fondo (default true). Desactivar para logos/stickers ya recortados. */
-  fade?: boolean;
 }
 
-const FADE_MASK =
-  "radial-gradient(circle, black 45%, transparent 78%)";
-
 /**
- * Charm/sticker decorativo: la imagen se funde con el fondo por sus propios
- * bordes (máscara radial que la desvanece hacia afuera) — sin caja, sin
- * borde, sin sombra ni recorte cuadrado/circular que la "encierre".
+ * Charm/sticker decorativo: sin caja, sin borde, sin sombra ni recorte
+ * cuadrado/circular que lo "encierre".
  */
 export function StickerBadge({
   src,
@@ -29,7 +23,6 @@ export function StickerBadge({
   className,
   rotate = -8,
   delay = 0,
-  fade = true,
 }: StickerBadgeProps) {
   return (
     <motion.div
@@ -39,16 +32,7 @@ export function StickerBadge({
       transition={{ duration: 0.6, ease: "easeOut", delay }}
       className={cn("pointer-events-none relative select-none", className)}
     >
-      <Image
-        src={src}
-        alt={alt}
-        fill
-        sizes="200px"
-        className={fade ? "object-cover" : "object-contain"}
-        style={
-          fade ? { maskImage: FADE_MASK, WebkitMaskImage: FADE_MASK } : undefined
-        }
-      />
+      <Image src={src} alt={alt} fill sizes="200px" className="object-contain" />
     </motion.div>
   );
 }

@@ -2,23 +2,18 @@ import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { CartoonButton } from "@/components/ui/cartoon-button";
 import { CurvedMarqueeText } from "@/components/ui/curved-marquee-text";
-import { HandDrawnCircle, HandDrawnUnderline } from "@/components/ui/hand-drawn";
 
 export function Hero() {
   return (
-    <section className="relative flex min-h-screen flex-col overflow-hidden bg-ink">
+    <section className="relative flex min-h-screen flex-col overflow-hidden bg-ink lg:min-h-[125vh]">
       <Image
-        src="/photos/fondo-ppal.png"
-        alt="Mujer sonriendo con luz natural cálida"
+        src="/photos/homepage.png"
+        alt="Mujer leyendo su journal Well Brain en la tina, rodeada de velas y luz cálida"
         fill
         priority
         sizes="100vw"
-        className="object-cover object-[70%_25%]"
+        className="object-cover object-[50%_15%]"
       />
-
-      {/* Oscurecimiento cálido: más fuerte a la izquierda para el texto, suave a la derecha sobre el rostro */}
-      <div className="absolute inset-0 bg-[linear-gradient(100deg,rgba(26,18,14,0.72)_0%,rgba(26,18,14,0.4)_38%,rgba(26,18,14,0.08)_65%)]" />
-      <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[#1a120e]/50 to-transparent" />
 
       {/* Destellos decorativos */}
       <SparkleIcon className="absolute top-32 right-[12%] h-5 w-5 text-white/40" />
@@ -29,31 +24,35 @@ export function Hero() {
           flex-col + justify-between hace que la sección (y la foto, que la cubre
           entera con object-cover) crezca más allá de 100vh si hace falta, en vez
           de recortar o superponer el marquee sobre el texto en pantallas anchas y bajas. */}
-      <div className="relative z-10 flex w-full flex-1 flex-col justify-between pt-28 pb-6 sm:pt-32 lg:pt-32 lg:pb-2">
-        <div className="max-w-2xl space-y-6 px-10 lg:px-24">
-          <h1 className="font-heading text-5xl leading-[1.05] text-white sm:text-6xl lg:text-7xl">
-            CHANGE
-            <br />
-            YOUR <span className="text-lavender">BRAIN</span>
-            <br />
-            CHANGE
-            <br />
-            YOUR <span className="text-pink">LIFE</span>
+      <div className="relative z-10 flex w-full flex-1 flex-col justify-between pt-28 pb-6 sm:pt-32 lg:pt-52 lg:pb-2">
+        <div className="max-w-3xl space-y-6 px-10 lg:px-24">
+          <h1 className="font-display text-5xl leading-[0.95] uppercase tracking-tight text-white [text-shadow:2px_3px_0_rgba(0,0,0,0.25),0_10px_24px_rgba(0,0,0,0.35)] sm:text-6xl lg:text-7xl">
+            <span className="block">Change</span>
+            <span className="block whitespace-nowrap">
+              Your <span className="text-lavender">Brain</span>
+            </span>
+            <span className="block">Change</span>
+            <span className="block whitespace-nowrap">
+              Your <span className="text-pink">Life</span>
+            </span>
           </h1>
 
-          <div className="mt-16">
+          <div className="mt-10 sm:mt-12 lg:mt-14">
             <CartoonButton
               label="Start Your Journey"
               href="/method"
-              color="bg-[#9B6FEA]"
+              color="bg-pink"
               icon={<ArrowRight className="h-5 w-5" />}
-              className="h-18 px-14 text-base text-white tracking-[0.2em] border-transparent"
+              className="h-18 px-14 text-base text-ink tracking-[0.2em] border-transparent"
             />
           </div>
         </div>
 
         {/* Texto decorativo gigante: marquee infinito sobre una curva suave (colina), a sangre (sin el padding horizontal del bloque de texto) */}
-        <CurvedMarqueeText className="pointer-events-none mt-10 h-32 w-full shrink-0 select-none sm:mt-16 sm:h-44 lg:mt-20 lg:h-60" />
+        <CurvedMarqueeText
+          className="pointer-events-none mt-16 h-32 w-full shrink-0 select-none sm:mt-20 sm:h-44 lg:mt-24 lg:h-60"
+          fill="#D8C4FF"
+        />
       </div>
     </section>
   );

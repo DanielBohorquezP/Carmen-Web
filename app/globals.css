@@ -10,9 +10,11 @@
   --spacing-section: 8rem;
   --spacing-section-sm: 5rem;
 
-  --font-heading: var(--font-heading), serif;
+  --font-heading: var(--font-heading), sans-serif;
   --font-body: var(--font-body), sans-serif;
   --font-button: var(--font-button), sans-serif;
+  --font-poppins: var(--font-poppins), sans-serif;
+  --font-display: var(--font-display), sans-serif;
 }
 
 @keyframes editorial-marquee {
@@ -53,5 +55,11 @@
   h4 {
     font-family: var(--font-heading);
     font-weight: 400;
+  }
+}
+
+@layer utilities {
+  .font-heading {
+    font-weight: 700;
   }
 }
