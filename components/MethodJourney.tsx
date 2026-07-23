@@ -7,6 +7,7 @@ import { CartoonButton } from "@/components/ui/cartoon-button";
 import { FolderIcon } from "@/components/ui/folder-icon";
 import { RetroWindowBar } from "@/components/ui/retro-window-bar";
 import { StickerBadge } from "@/components/ui/sticker-badge";
+import { cn } from "@/lib/utils";
 import { PILLARS } from "@/lib/pillars";
 
 export function MethodJourney() {
@@ -193,27 +194,54 @@ export function MethodJourney() {
             >
               <RetroWindowBar label={pillar.name} onClose={close} className="bg-lavender/40" />
 
-              <div className="px-6 pt-16 pb-10 sm:px-12 sm:pt-20 sm:pb-14 lg:px-20 lg:pt-24">
-                <span className="block font-heading text-6xl leading-none text-[#9B6FEA] sm:text-8xl">
-                  {String((openIndex ?? 0) + 1).padStart(2, "0")}
-                </span>
+              <div className="pt-9 sm:pt-11 lg:pt-14">
+                <div className="flex flex-col lg:flex-row">
+                  <div className="flex shrink-0 flex-row items-center gap-4 border-b-2 border-ink bg-lavender/25 px-6 py-6 sm:px-12 sm:py-8 lg:w-64 lg:flex-col lg:items-start lg:justify-start lg:gap-6 lg:border-r-2 lg:border-b-0 lg:px-8 lg:py-10">
+                    <span className="flex h-16 w-16 shrink-0 items-center justify-center border-2 border-ink bg-cream font-heading text-3xl text-[#9B6FEA] shadow-[3px_3px_0_0_#1D1D1D] sm:h-20 sm:w-20 sm:text-4xl lg:h-24 lg:w-24 lg:text-5xl">
+                      {String((openIndex ?? 0) + 1).padStart(2, "0")}
+                    </span>
+                    <div className="min-w-0">
+                      <h3
+                        id="pillar-card-title"
+                        className="font-button text-lg tracking-[0.1em] text-ink uppercase sm:text-xl lg:text-2xl"
+                      >
+                        {pillar.name}
+                      </h3>
+                      <span className="mt-1.5 block font-body text-xs text-ink/50 sm:text-sm">
+                        {pillar.month}
+                      </span>
+                    </div>
+                  </div>
 
-                <h3
-                  id="pillar-card-title"
-                  className="mt-6 font-button text-2xl tracking-[0.12em] text-ink uppercase sm:text-3xl"
-                >
-                  {pillar.name}
-                </h3>
+                  <div className="flex-1 px-6 py-8 sm:px-12 sm:py-10 lg:px-14 lg:py-12">
+                    <div className="border-2 border-ink/15 bg-white/60 px-5 py-5 shadow-[inset_0_2px_0_0_rgba(29,29,29,0.05)] sm:px-8 sm:py-7">
+                      <p className="max-w-xl font-body text-base leading-relaxed text-ink/70 sm:text-lg">
+                        {pillar.description}
+                      </p>
+                    </div>
+                  </div>
+                </div>
 
-                <span className="mt-6 block h-px w-24 bg-ink/15" />
-
-                <p className="mt-6 max-w-xl font-body text-lg leading-relaxed text-ink/70 sm:text-xl">
-                  {pillar.description}
-                </p>
-
-                <span className="mt-10 block font-body text-sm tracking-wide text-ink/45">
-                  {pillar.month}
-                </span>
+                <div className="flex items-center justify-between gap-4 border-t-2 border-ink bg-lavender/15 px-6 py-3 sm:px-12">
+                  <div className="flex items-center gap-1.5" aria-hidden="true">
+                    {PILLARS.map((_, i) => (
+                      <span
+                        key={i}
+                        className={cn(
+                          "h-1.5 w-1.5 border border-ink",
+                          i === openIndex ? "bg-ink" : "bg-transparent",
+                        )}
+                      />
+                    ))}
+                  </div>
+                  <button
+                    type="button"
+                    onClick={close}
+                    className="font-button text-[10px] tracking-wider text-ink/60 uppercase underline-offset-2 hover:underline focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2 focus-visible:outline-none"
+                  >
+                    Cerrar ventana
+                  </button>
+                </div>
               </div>
             </motion.div>
           </>
